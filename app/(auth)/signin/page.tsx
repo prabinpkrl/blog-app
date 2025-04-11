@@ -1,15 +1,44 @@
 import Link from "next/link";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+// import { useEffect, useState } from "react";
 const Signin = () => {
-    return (
-            <div>
-                <p>
-                    Login:
-                </p>
-                <p>
-                    If your don't have accout create it <span><Link href="/signup">Here</Link></span>
-                </p>
-            </div>
-    )
-}
+  return (
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="bg-white p-8 rounded shadow-accent w-1/2">
+        <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
+
+        <form>
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Email
+            </label>
+            <Input type="email" className="" placeholder="you@example.com" />
+          </div>
+
+          <div className="mb-6">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Password
+            </label>
+            <Input type="password" className="" placeholder="••••••••" />
+          </div>
+
+          <Button
+            variant="secondary"
+            className="w-full bg-gray-700 text-white py-2 rounded hover:bg-gray-800 transition"
+          >
+            Log In
+          </Button>
+        </form>
+        <div className="mt-5">
+          Donot have accout create here.{" "}
+          <Link href="/signup" className="underline">
+            Sign up
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default Signin;
