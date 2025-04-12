@@ -5,12 +5,14 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { redirect } from "next/navigation";
+
 const Signin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleLogIn = () => {
     let signupUser = JSON.parse(localStorage.getItem("user"));
+    console.log(signupUser);
 
     if (email === signupUser.email && password === signupUser.password) {
       localStorage.setItem("isLoggedIn", "true");
