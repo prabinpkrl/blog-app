@@ -4,37 +4,66 @@ const Card = () => {
   const blogPosts = [
     {
       id: 1,
-      title: "How to Start with Tailwind",
+      title: "Welcome to Future Blog",
       description:
-        "A beginner-friendly guide on setting up Tailwind CSS for your projects.",
-      image: "/file.svg",
+        "This is the very first post on Future Blog. Stay tuned for tech tips, tutorials, and future-ready ideas!",
+      image: {
+        url: "/file.svg",
+        alt: "A futuristic digital illustration",
+      },
     },
     {
       id: 2,
-      title: "Understanding Grid in Tailwind",
+      title: "The Future of Web Development",
       description:
-        "Learn how to use the powerful CSS Grid system with Tailwind classes.",
-      image: "/globe.svg",
+        "Let’s explore the trends and tools shaping the future of website and app development.",
+      image: {
+        url: "/globe.svg",
+        alt: "Modern web development illustration",
+      },
     },
     {
       id: 3,
-      title: "Mastering Flexbox with Tailwind",
+      title: "Why Learning JavaScript is Important",
       description:
-        "Discover when to use flex over grid and how they complement each other.",
-      image: "/window.svg",
+        "JavaScript is everywhere! Here’s why it’s still the best language to start your programming journey.",
+      image: {
+        url: "/window.svg",
+        alt: "JavaScript code on screen",
+      },
+    },
+    {
+      id: 4,
+      title: "Understanding Tailwind CSS Basics",
+      description:
+        "Simplify your styling process with Tailwind — the utility-first CSS framework that makes layout a breeze.",
+      image: {
+        url: "/file.svg",
+        alt: "Tailwind CSS styled project example",
+      },
+    },
+    {
+      id: 5,
+      title: "How to Stay Motivated as a Developer",
+      description:
+        "Developer life can be challenging. Here are some easy ways to stay inspired and productive on your coding journey.",
+      image: {
+        url: "/globe.svg",
+        alt: "Motivational quote on laptop",
+      },
     },
   ];
 
   return (
-    <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
+    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
       {blogPosts.map((post) => (
         <div
           key={post.id}
           className="bg-white rounded-2xl shadow-md overflow-hidden flex"
         >
           <img
-            src={post.image}
-            alt={post.title}
+            src={post.image.url}
+            alt={post.image.alt}
             className="h-48 w-fit object-cover"
           />
           <div className="p-4 flex flex-col justify-center">
