@@ -1,17 +1,24 @@
 "use client";
 import { redirect } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import Card from "@/components/ui/card";
 import Link from "next/link";
 
 const BlogHomePage = () => {
+  const [post, setPost] = useState();
+
   useEffect(() => {
     const isLoggedIn = localStorage.getItem("isLoggedIn");
 
     if (isLoggedIn !== "true") {
       redirect("/login");
     }
+  }, []);
+  useEffect(() => {
+    const newblogpost = JSON.parse(localStorage.getItem("blogPosts"));
+
+    setPost(newblogpost);
   }, []);
 
   return (

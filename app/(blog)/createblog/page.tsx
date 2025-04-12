@@ -1,10 +1,33 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { redirect } from "next/navigation";
+import { useState } from "react";
+
 const CreateBlog = () => {
+  const availbleimages = ["/file.svg", "/globe.svg", "/window.svg"];
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [selected, setSelected] = useState(null);
+
+  const handleSubmit = (e: React.FocusEvent) => {
+    e.preventDefault();
+    console.log({ title, description });
+    const existingPosts = JSON.parse(localStorage.getItem("blogPosts") || "[]");
+
+    const newblog = { id: Date.now(), title, description, image: selected };
+
+    localStorage.setItem(
+      "blogPosts",
+      JSON.stringify([...existingPosts, newblog])
+    );
+    redirect("/Home");
+  };
+
   return (
-    <div className=" flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
       <div className="bg-white rounded-lg shadow-md w-full max-w-2xl">
-        <form className="">
+        <form onSubmit={handleSubmit}>
           <div className="flex justify-between p-6 border-b border-gray-200">
             <h2 className="text-2xl font-bold text-gray-800">
               Create New Blog Post
@@ -22,7 +45,13 @@ const CreateBlog = () => {
               >
                 Title
               </label>
-              <Input type="text" id="title" placeholder="title" className="" />
+              <Input
+                type="text"
+                id="title"
+                placeholder="title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+              />
             </div>
 
             <div className="space-y-2">
@@ -35,18 +64,35 @@ const CreateBlog = () => {
               <textarea
                 id="description"
                 placeholder="Write your blog content here..."
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md  focus:border-gray-400 focus:shadow-gray-500 min-h-[200px] "
               />
             </div>
 
-            <div className="">
-              <label
-                htmlFor="image"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Add your image
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">
+                Select Image
               </label>
-              <Input type="file" id="image" />
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mt-2">
+                {availbleimages.map((image, index) => (
+                  <div
+                    key={index}
+                    className={`relative rounded-md overflow-hidden border-2 ${
+                      selected === image
+                        ? "border-gray-800"
+                        : "border-transparent"
+                    }`}
+                    onClick={() => setSelected(image)}
+                  >
+                    <img
+                      src={image}
+                      alt="image"
+                      className="w-full object-cover h-32"
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
           <div className="p-6 border-t border-gray-200">
