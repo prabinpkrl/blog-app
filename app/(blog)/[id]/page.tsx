@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
-import { useParams } from "next/navigation";
+import { redirect, useParams } from "next/navigation";
 
 const defaultPosts = [
   {
@@ -67,10 +67,36 @@ const BlogDetails = () => {
 
   if (!blog) return <>Blog not foung</>;
 
+  const handleDelete = (id: string) => {
+    // Get deleted dummy post IDs
+    const deleted = JSON.parse(localStorage.getItem("deletedPosts") || "[]");
+
+    // If it's a dummy post or any post, mark it as deleted
+    if (!deleted.includes(id)) {
+      deleted.push(id);
+    }
+    localStorage.setItem("deletedPosts", JSON.stringify(deleted));
+
+    // Also remove from blogPosts (for user-created posts)
+    const storedPosts = JSON.parse(localStorage.getItem("blogPosts") || "[]");
+    const updatedPosts = storedPosts.filter((post: any) => post.id !== id);
+    localStorage.setItem("blogPosts", JSON.stringify(updatedPosts));
+
+    // Reload or navigate
+    redirect("/Home");
+  };
+
   return (
     <div className="p-8">
       <Button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">
         <Link href={`/editblog/${blog.id}`}>Edit</Link>
+      </Button>
+      <Button
+        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
+        variant="destructive"
+        onClick={() => handleDelete(blog.id)}
+      >
+        <Link href={`/editblog/${blog.id}`}>Delete</Link>
       </Button>
       <h1 className="text-3xl font-bold mb-4">{blog.title}</h1>
       <img

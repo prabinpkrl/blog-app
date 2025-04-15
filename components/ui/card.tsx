@@ -70,16 +70,33 @@ const Card = () => {
 
   useEffect(() => {
     const newBlogStored = localStorage.getItem("blogPosts");
+    const deletedPostsStored = localStorage.getItem("deletedPosts");
+
     try {
       const parsed = newBlogStored ? JSON.parse(newBlogStored) : [];
+      const deletedPosts = deletedPostsStored
+        ? JSON.parse(deletedPostsStored)
+        : [];
 
-      setUserPosts(parsed);
+      const filteredPosts = parsed.filter(
+        (post: BlogPost) => !deletedPosts.includes(post.id)
+      );
+
+      setUserPosts(filteredPosts);
     } catch (error) {
       console.error("Error:", error);
       setUserPosts([]);
     }
   }, []);
-  const allPosts = [...userPosts, ...defaultPosts];
+  const allPosts = [
+    ...userPosts,
+    ...defaultPosts.filter(
+      (post) =>
+        !JSON.parse(localStorage.getItem("deletedPosts") || "[]").includes(
+          post.id
+        )
+    ),
+  ];
 
   return (
     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
