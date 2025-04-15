@@ -14,8 +14,21 @@ const CreateBlog = () => {
     e.preventDefault();
     console.log({ title, description });
     const existingPosts = JSON.parse(localStorage.getItem("blogPosts") || "[]");
+    const slug = title
+      .toLocaleLowerCase()
+      .trim()
+      .replace(/[^\w\s-]/g, "")
+      .replace(/\s+/g, "-");
 
-    const newblog = { id: Date.now(), title, description, image: selected };
+    const newblog = {
+      id: slug,
+      title,
+      description,
+      image: {
+        url: selected,
+        alt: `${title} preview image`,
+      },
+    };
 
     localStorage.setItem(
       "blogPosts",

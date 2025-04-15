@@ -1,16 +1,6 @@
-import { useEffect, useState } from "react";
-import { Button } from "./button";
-import Link from "next/link";
+"use client";
 
-type BlogPost = {
-  id: string;
-  title: string;
-  description: string;
-  image: {
-    url: string;
-    alt: string;
-  };
-};
+import { useParams } from "next/navigation";
 
 const defaultPosts = [
   {
@@ -65,44 +55,27 @@ const defaultPosts = [
   },
 ];
 
-const Card = () => {
-  const [userPosts, setUserPosts] = useState<BlogPost[]>([]);
+const BlogDetails = () => {
+  const params = useParams();
+  const id = params.id;
 
-  useEffect(() => {
-    const newBlogStored = localStorage.getItem("blogPosts");
-    try {
-      const parsed = newBlogStored ? JSON.parse(newBlogStored) : [];
-      setUserPosts(parsed);
-    } catch (error) {
-      console.error("Error:", error);
-      setUserPosts([]);
-    }
-  }, []);
-  const allPosts = [...userPosts, ...defaultPosts];
+  const storedPosts = JSON.parse(localStorage.getItem("blogPosts") || "[]");
+  const allPosts = [...storedPosts, ...defaultPosts];
+  const blogs = allPosts.find((post: any) => post.id === id);
+
+  if (!blogs) return <>Blog not foung</>;
 
   return (
-    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
-      {allPosts.map((post, index) => (
-        <div
-          key={post.id ? post.id : `user-${index}`}
-          className="bg-white rounded-2xl shadow-md overflow-hidden flex"
-        >
-          <img
-            src={post.image.url}
-            alt={post.image.alt}
-            className="h-48 w-fit object-cover"
-          />
-          <div className="p-4 flex flex-col justify-center">
-            <h2 className="text-xl font-bold mb-2">{post.title}</h2>
-            <p className="text-gray-600 mb-4">{post.description}</p>
-            <Button className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition">
-              <Link href={`/${post.id}`}>Read More</Link>
-            </Button>
-          </div>
-        </div>
-      ))}
+    <div className="p-8">
+      <h1 className="text-3xl font-bold mb-4">{blogs.title}</h1>
+      <img
+        src={blogs.image.url}
+        alt={blogs.image.alt}
+        className="w-96 h-64 object-cover mb-4"
+      />
+      <p className="text-lg">{blogs.description}</p>
     </div>
   );
 };
 
-export default Card;
+export default BlogDetails;
