@@ -1,7 +1,12 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, ReactNode } from "react";
 import { redirect } from "next/navigation";
-const ProtectedRoute = ({ children }) => {
+
+interface ProtectedRouteProps {
+  children: ReactNode;
+}
+
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   useEffect(() => {
     const IsLoggedIn = localStorage.getItem("isLoggedIn");
 

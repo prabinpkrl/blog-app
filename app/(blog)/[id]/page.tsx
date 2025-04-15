@@ -1,6 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import Image from "next/image";
 
 import { redirect, useParams } from "next/navigation";
 
@@ -99,7 +100,7 @@ const BlogDetails = () => {
         <Link href={`/editblog/${blog.id}`}>Delete</Link>
       </Button>
       <h1 className="text-3xl font-bold mb-4">{blog.title}</h1>
-      <img
+      <Image
         src={blog.image.url}
         alt={blog.image.alt}
         className="w-96 h-64 object-cover mb-4"

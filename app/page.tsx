@@ -12,7 +12,7 @@ export default function Page() {
       </nav>
 
       <main className="flex flex-col ">
-        <h2 className="text-5xl">Today's Headlines: Stay</h2>
+        <h2 className="text-5xl">Todays Headlines: Stay</h2>
         <div>
           <span className="text-5xl">Informed </span>{" "}
           <span className="text-lg max-w-2xl mx-auto">

@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { redirect } from "next/navigation";
 import { useState } from "react";
+import Image from "next/image";
 
 const CreateBlog = () => {
   const availbleimages = ["/file.svg", "/globe.svg", "/window.svg"];
@@ -103,7 +104,7 @@ const CreateBlog = () => {
                     }`}
                     onClick={() => setSelected(image)}
                   >
-                    <img
+                    <Image
                       src={image}
                       alt="image"
                       className="w-full object-cover h-32"

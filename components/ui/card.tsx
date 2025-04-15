@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button } from "./button";
 import Link from "next/link";
+import Image from "next/image";
 
 type BlogPost = {
   id: string;
@@ -105,7 +106,7 @@ const Card = () => {
           key={post.id ? post.id : `user-${index}`}
           className="bg-white rounded-2xl shadow-md overflow-hidden flex"
         >
-          <img
+          <Image
             src={post.image.url}
             alt={post.image.alt}
             className="h-48 w-fit object-cover"

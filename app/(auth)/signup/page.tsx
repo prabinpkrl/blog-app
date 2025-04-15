@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 const Signup = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");

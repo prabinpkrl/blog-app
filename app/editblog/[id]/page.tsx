@@ -4,6 +4,7 @@ import { redirect, useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import Image from "next/image";
 
 const availbleimages = ["/file.svg", "/globe.svg", "/window.svg"];
 
@@ -188,7 +189,7 @@ const Editing = () => {
                     }`}
                     onClick={() => setSelected(image)}
                   >
-                    <img
+                    <Image
                       src={image}
                       alt="image"
                       className="w-full object-cover h-32"
