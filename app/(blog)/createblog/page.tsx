@@ -8,9 +8,9 @@ const CreateBlog = () => {
   const availbleimages = ["/file.svg", "/globe.svg", "/window.svg"];
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [selected, setSelected] = useState(null);
+  const [selected, setSelected] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FocusEvent) => {
+  const handleSubmit = (e: React.FocusEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log({ title, description });
     const existingPosts = JSON.parse(localStorage.getItem("blogPosts") || "[]");
