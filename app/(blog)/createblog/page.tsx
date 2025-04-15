@@ -12,6 +12,11 @@ const CreateBlog = () => {
 
   const handleSubmit = (e: React.FocusEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!selected) {
+      alert("Please select an image before publishing.");
+      return;
+    }
     console.log({ title, description });
     const existingPosts = JSON.parse(localStorage.getItem("blogPosts") || "[]");
     const slug = title

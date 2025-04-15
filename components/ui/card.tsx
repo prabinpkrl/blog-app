@@ -72,6 +72,7 @@ const Card = () => {
     const newBlogStored = localStorage.getItem("blogPosts");
     try {
       const parsed = newBlogStored ? JSON.parse(newBlogStored) : [];
+
       setUserPosts(parsed);
     } catch (error) {
       console.error("Error:", error);

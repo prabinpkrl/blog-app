@@ -1,4 +1,6 @@
 "use client";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 import { useParams } from "next/navigation";
 
@@ -61,19 +63,22 @@ const BlogDetails = () => {
 
   const storedPosts = JSON.parse(localStorage.getItem("blogPosts") || "[]");
   const allPosts = [...storedPosts, ...defaultPosts];
-  const blogs = allPosts.find((post: any) => post.id === id);
+  const blog = allPosts.find((post: any) => post.id === id);
 
-  if (!blogs) return <>Blog not foung</>;
+  if (!blog) return <>Blog not foung</>;
 
   return (
     <div className="p-8">
-      <h1 className="text-3xl font-bold mb-4">{blogs.title}</h1>
+      <Button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">
+        <Link href={`/editblog/${blog.id}`}>Edit</Link>
+      </Button>
+      <h1 className="text-3xl font-bold mb-4">{blog.title}</h1>
       <img
-        src={blogs.image.url}
-        alt={blogs.image.alt}
+        src={blog.image.url}
+        alt={blog.image.alt}
         className="w-96 h-64 object-cover mb-4"
       />
-      <p className="text-lg">{blogs.description}</p>
+      <p className="text-lg">{blog.description}</p>
     </div>
   );
 };
