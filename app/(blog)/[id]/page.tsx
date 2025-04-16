@@ -70,7 +70,6 @@ const BlogDetails = () => {
         />
       )}
 
-      {/* Blog Content */}
       <div className="prose lg:prose-xl prose-slate text-gray-800">
         <p>{blog.description}</p>
       </div>

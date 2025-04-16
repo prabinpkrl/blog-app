@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { Button } from "./button";
 import Link from "next/link";
 import Image from "next/image";
-import { BlogPost, defaultPosts } from "@/data/dummyblogs";
+import { defaultPosts } from "@/data/dummyblogs";
+import { BlogPost } from "@/types/types";
 
 const Card = () => {
   const [allPosts, setAllPosts] = useState<BlogPost[]>([]);
@@ -13,13 +14,11 @@ const Card = () => {
         localStorage.getItem("blogPosts") || "null"
       );
 
-      // if nothing in localStorage, store defaults
       if (!storedPosts) {
         localStorage.setItem("blogPosts", JSON.stringify(defaultPosts));
         storedPosts = defaultPosts;
       }
 
-      // Sort by createdAt - newest first
       const sortedPosts = [...storedPosts].sort((a, b) => {
         const dateA = new Date(a.createdAt ?? 0).getTime();
         const dateB = new Date(b.createdAt ?? 0).getTime();
