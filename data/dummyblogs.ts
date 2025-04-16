@@ -34,7 +34,7 @@ export const defaultPosts: BlogPost[] = [
       <p>Staying relevant in the web world means staying curious and flexible. Keep building, keep learning!</p>
     `,
     image: {
-      url: "/webdevelopment.jpg",
+      url: "/webdevlopment.jpg",
       alt: "Modern web development illustration",
     },
     createdAt: "2025-1-1",

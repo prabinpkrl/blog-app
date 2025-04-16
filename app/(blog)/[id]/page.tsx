@@ -73,8 +73,6 @@ const BlogDetails = () => {
 
       <div className="prose lg:prose-xl prose-slate text-gray-800">
         <div dangerouslySetInnerHTML={{ __html: blog.description }} />
-
-        {/* <p>{blog.description}</p> */}
       </div>
     </div>
   );

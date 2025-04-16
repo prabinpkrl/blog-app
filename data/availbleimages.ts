@@ -3,6 +3,6 @@ export const availbleimages = [
      "/motivation.jpg", 
      "/quickblog.jpg",
      "/tailwind.jpg",
-     "/webdevelopment.jpg"
+     "/webdevlopment.jpg"
 
 ]
