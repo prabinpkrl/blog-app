@@ -18,7 +18,7 @@ export default function Page() {
       <main className="flex flex-col-reverse md:flex-row items-center justify-between max-w-7xl mx-auto px-8 py-16">
         <div className="flex-1 mb-8 md:mb-0">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-4">
-            Today's Headlines: Stay <br /> Informed
+            Today&apos;s Headlines: Stay <br /> Informed
           </h2>
           <p className="text-lg text-gray-600 mb-6 max-w-lg">
             Explore the latest news, insights, and tech trends from around the

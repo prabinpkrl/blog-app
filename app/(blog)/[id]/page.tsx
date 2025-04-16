@@ -2,7 +2,8 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
-import { BlogPost, defaultPosts } from "@/data/dummyblogs";
+import { defaultPosts } from "@/data/dummyblogs";
+import { BlogPost } from "@/types/types";
 
 import { redirect, useParams } from "next/navigation";
 

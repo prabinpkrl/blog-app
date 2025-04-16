@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
-import { BlogPost } from "@/components/ui/card";
+import { BlogPost } from "@/types/types";
 
 const availbleimages = ["/file.svg", "/globe.svg", "/window.svg"];
 
