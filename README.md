@@ -19,7 +19,7 @@ A simple blog application built with **Next.js**, **Tailwind CSS**, and **localS
 
 1. Clone the repo:
    ```bash
-   git clone https://github.com/your-username/blog-app.git
+   git clone https://gitlab.com/blogappprabin/blogapp.git
    ```
 2. Install dependencies:
    ```bash

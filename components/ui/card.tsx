@@ -66,10 +66,10 @@ const Card = () => {
               <h2 className="text-lg font-semibold text-gray-900 mb-1 line-clamp-2">
                 {post.title}
               </h2>
-
-              <p className="text-sm text-gray-600 mb-3 line-clamp-2">
-                {post.description}
-              </p>
+              <div
+                className="text-sm text-gray-600 mb-3 line-clamp-2"
+                dangerouslySetInnerHTML={{ __html: post.description }}
+              />
             </div>
 
             <Link href={`/${post.id}`}>
