@@ -47,7 +47,7 @@ const Signup = () => {
 
     alert("Signup successful!");
 
-    redirect("/signin");
+    redirect("/login");
   };
 
   return (
@@ -115,7 +115,7 @@ const Signup = () => {
         <p className="mt-5 text-center text-sm text-gray-600">
           Already have an account?{" "}
           <Link
-            href="/signin"
+            href="/login"
             className="underline text-gray-800 hover:text-black"
           >
             Sign in here

@@ -19,7 +19,7 @@ const Signin = () => {
       localStorage.setItem("isLoggedIn", "true");
       alert("login Sucessful");
 
-      redirect("/Home");
+      redirect("/blogs");
     } else {
       alert("invalid");
     }

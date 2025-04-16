@@ -11,7 +11,7 @@ export default function Page() {
           variant="link"
           className="bg-gray-900 text-white hover:bg-gray-800"
         >
-          <Link href="/signin">Login</Link>
+          <Link href="/login">Login</Link>
         </Button>
       </nav>
 
@@ -25,7 +25,7 @@ export default function Page() {
             world. Stay ahead with Future Blog.
           </p>
           <Button variant="outline" className="px-6 py-3 text-base font-medium">
-            <Link href="/signin">Get Started</Link>
+            <Link href="/login">Get Started</Link>
           </Button>
         </div>
 
