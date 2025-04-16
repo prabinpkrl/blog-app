@@ -1,27 +1,46 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Page() {
   return (
-    <div className="m-1.5">
-      <nav className="flex items-center justify-between mt-3 mb-3 px-6 py-4 border-b-2">
-        <h1 className="font-semibold text-3xl">Future Blog</h1>
-        <Button asChild>
+    <div className="min-h-screen bg-gray-50">
+      <nav className="flex items-center justify-between px-8 py-6 border-b shadow-sm bg-white">
+        <h1 className="font-bold text-3xl text-gray-800">Future Blog</h1>
+        <Button
+          variant="link"
+          className="bg-gray-900 text-white hover:bg-gray-800"
+        >
           <Link href="/signin">Login</Link>
         </Button>
       </nav>
 
-      <main className="flex flex-col ">
-        <h2 className="text-5xl">Todays Headlines: Stay</h2>
-        <div>
-          <span className="text-5xl">Informed </span>{" "}
-          <span className="text-lg max-w-2xl mx-auto">
-            Explore the latest news from around the world.
-          </span>
+      <main className="flex flex-col-reverse md:flex-row items-center justify-between max-w-7xl mx-auto px-8 py-16">
+        {/* Text Section */}
+        <div className="flex-1 mb-8 md:mb-0">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-4">
+            Today's Headlines: Stay <br /> Informed
+          </h2>
+          <p className="text-lg text-gray-600 mb-6 max-w-lg">
+            Explore the latest news, insights, and tech trends from around the
+            world. Stay ahead with Future Blog.
+          </p>
+          <Button variant="outline" className="px-6 py-3 text-base font-medium">
+            <Link href="/signin">Get Started</Link>
+          </Button>
         </div>
-        <Button variant="outline" className="w-fit mt-1.5">
-          <Link href="/signin">Get started</Link>
-        </Button>
+
+        {/* Illustration Section */}
+        <div className="flex-1 flex justify-center">
+          <Image
+            src="/file.svg"
+            alt="News illustration"
+            className="rounded-2xl shadow-lg"
+            width={500}
+            height={500}
+            priority
+          />
+        </div>
       </main>
     </div>
   );

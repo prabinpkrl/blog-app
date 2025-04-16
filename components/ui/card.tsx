@@ -112,26 +112,29 @@ const Card = () => {
   // ];
 
   return (
-    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
+    <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
       {allPosts.map((post, index) => (
         <div
           key={post.id ? post.id : `user-${index}`}
-          className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden flex flex-row border border-gray-100"
+          className="bg-white rounded-xl shadow-md hover:shadow-lg transition duration-300 overflow-hidden flex flex-row border border-gray-100"
         >
-          <div className=" relative w-full">
-            <Image
-              src={post.image.url}
-              alt={post.image.alt}
-              width={500}
-              height={300}
-              className="w-full h-full object-cover hover:scale-105"
-              style={{ height: "100%", position: "absolute" }}
-            />
-          </div>
+          {/* Left Image */}
+          {post.image?.url && (
+            <div className="w-1/3 h-auto max-h-48 overflow-hidden">
+              <Image
+                src={post.image.url}
+                alt={post.image.alt || "Blog image"}
+                width={200}
+                height={200}
+                className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+              />
+            </div>
+          )}
 
-          <div className="p-5 flex flex-col flex-grow">
-            <div className="flex items-center text-xs text-gray-500 mb-2">
-              <span>
+          {/* Right Content */}
+          <div className="p-4 flex flex-col justify-between w-2/3">
+            <div>
+              <span className="text-xs text-gray-500">
                 {post.createdAt
                   ? new Date(post.createdAt).toLocaleDateString("en-US", {
                       year: "numeric",
@@ -140,21 +143,21 @@ const Card = () => {
                     })
                   : "Date unknown"}
               </span>
+
+              <h2 className="text-lg font-semibold text-gray-900 mb-1 line-clamp-2">
+                {post.title}
+              </h2>
+
+              <p className="text-sm text-gray-600 mb-3 line-clamp-2">
+                {post.description}
+              </p>
             </div>
-            <h2 className="text-xl font-bold mb-2 text-gray-800 line-clamp-2">
-              {post.title}
-            </h2>
-            <p className="text-gray-600 mb-4 flex-grow line-clamp-2">
-              {post.description}
-            </p>
-            <Button className="bg-gray-700 hover:bg-gray-800 text-white px-4 py-2 rounded-md transition-colors duration-200 w-full">
-              <Link
-                href={`/${post.id}`}
-                className="w-full inline-block text-center"
-              >
+
+            <Link href={`/${post.id}`}>
+              <Button className="bg-gray-700 hover:bg-gray-800 text-white w-full px-4 py-2 rounded-md transition">
                 Read More
-              </Link>
-            </Button>
+              </Button>
+            </Link>
           </div>
         </div>
       ))}

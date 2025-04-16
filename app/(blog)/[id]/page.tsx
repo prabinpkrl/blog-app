@@ -92,23 +92,29 @@ const BlogDetails = () => {
   };
 
   return (
-    <div className="p-8">
-      <Link href={`/editblog/${blog.id}`}>
-        <Button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">
-          Edit
+    <div className="max-w-4xl mx-auto p-6 md:p-10">
+      <div className="flex justify-end space-x-3 mb-6">
+        <Link href={`/editblog/${blog.id}`}>
+          <Button className="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition duration-300">
+            Edit
+          </Button>
+        </Link>
+
+        <Button
+          className="bg-red-600 text-white px-5 py-2 rounded-lg hover:bg-red-700 transition duration-300"
+          onClick={() => handleDelete(blog.id)}
+        >
+          Delete
         </Button>
-      </Link>
+      </div>
 
-      <Button
-        className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition"
-        onClick={() => handleDelete(blog.id)}
-      >
-        Delete
-      </Button>
+      <h1 className="text-4xl font-extrabold text-gray-900 mb-2">
+        {blog.title}
+      </h1>
 
-      <h1 className="text-3xl font-bold mb-4">{blog.title}</h1>
       {blog.createdAt && (
-        <div className="text-gray-500 mb-4">
+        <div className="text-gray-500 text-sm mb-6">
+          Published on{" "}
           {new Date(blog.createdAt).toLocaleDateString("en-US", {
             year: "numeric",
             month: "long",
@@ -116,14 +122,21 @@ const BlogDetails = () => {
           })}
         </div>
       )}
-      <Image
-        src={blog.image.url}
-        alt={blog.image.alt}
-        height={500}
-        width={300}
-        className="w-96 h-64 object-cover mb-4"
-      />
-      <p className="text-lg">{blog.description}</p>
+
+      {blog.image?.url && (
+        <Image
+          src={blog.image.url}
+          alt={blog.image.alt || "Blog image"}
+          width={800}
+          height={400}
+          className="rounded-xl shadow-lg mb-6 object-cover w-full max-h-[400px]"
+        />
+      )}
+
+      {/* Blog Content */}
+      <div className="prose lg:prose-xl prose-slate text-gray-800">
+        <p>{blog.description}</p>
+      </div>
     </div>
   );
 };
