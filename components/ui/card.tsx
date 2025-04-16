@@ -8,25 +8,25 @@ const Card = () => {
   const [allPosts, setAllPosts] = useState<BlogPost[]>([]);
 
   useEffect(() => {
-    const newBlogStored = localStorage.getItem("blogPosts");
-    const deletedPostsStored = localStorage.getItem("deletedPosts");
-
     try {
-      let parsed: BlogPost[] = newBlogStored ? JSON.parse(newBlogStored) : null;
-      const deletedPosts: string[] = deletedPostsStored
-        ? JSON.parse(deletedPostsStored)
-        : [];
-
-      if (!parsed) {
-        localStorage.setItem("blogPosts", JSON.stringify(defaultPosts));
-        parsed = defaultPosts;
-      }
-
-      const filteredPosts = parsed.filter(
-        (post) => !deletedPosts.includes(post.id)
+      let storedPosts: BlogPost[] = JSON.parse(
+        localStorage.getItem("blogPosts") || "null"
       );
 
-      setAllPosts(filteredPosts);
+      // if nothing in localStorage, store defaults
+      if (!storedPosts) {
+        localStorage.setItem("blogPosts", JSON.stringify(defaultPosts));
+        storedPosts = defaultPosts;
+      }
+
+      // Sort by createdAt - newest first
+      const sortedPosts = [...storedPosts].sort((a, b) => {
+        const dateA = new Date(a.createdAt ?? 0).getTime();
+        const dateB = new Date(b.createdAt ?? 0).getTime();
+        return dateB - dateA;
+      });
+
+      setAllPosts(sortedPosts);
     } catch (error) {
       console.error("Error:", error);
       setAllPosts(defaultPosts);

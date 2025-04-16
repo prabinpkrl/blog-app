@@ -3,9 +3,18 @@
 import { Button } from "@/components/ui/button";
 import Card from "@/components/ui/card";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import ProtectedRoute from "@/components/protectedRoute";
 
 const BlogHomePage = () => {
+  const router = useRouter();
+
+  const handleLogout = () => {
+    localStorage.removeItem("isLoggedIn");
+
+    router.push("/");
+  };
+
   return (
     <ProtectedRoute>
       <div className="min-h-screen bg-gray-50">
@@ -16,14 +25,22 @@ const BlogHomePage = () => {
               Future Blog
             </h1>
 
-            <Link href="/createblog">
+            <div className="flex gap-3 items-center">
+              <Link href="/createblog">
+                <Button
+                  variant="link"
+                  className="bg-gray-800 hover:bg-gray-900 text-white font-medium px-5 py-2 rounded-lg transition-all"
+                >
+                  Create Blog
+                </Button>
+              </Link>
               <Button
-                variant="link"
-                className="bg-gray-800 hover:bg-gray-900 text-white font-medium px-5 py-2 rounded-lg transition-all"
+                onClick={handleLogout}
+                className="bg-red-500 hover:bg-red-600 text-white font-medium px-4 py-2 rounded-lg transition-all"
               >
-                Create Blog
+                Logout
               </Button>
-            </Link>
+            </div>
           </nav>
         </header>
 
@@ -46,4 +63,5 @@ const BlogHomePage = () => {
     </ProtectedRoute>
   );
 };
+
 export default BlogHomePage;
