@@ -6,7 +6,7 @@ export default function Page() {
   return (
     <div className="min-h-screen bg-gray-50">
       <nav className="flex items-center justify-between px-8 py-6 border-b shadow-sm bg-white">
-        <h1 className="font-bold text-3xl text-gray-800">Future Blog</h1>
+        <h1 className="font-bold text-3xl text-gray-800">QuickBlog</h1>
         <Button
           variant="link"
           className="bg-gray-900 text-white hover:bg-gray-800"

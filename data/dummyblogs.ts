@@ -2,10 +2,10 @@ import { BlogPost } from "@/types/types";
 
 export const defaultPosts: BlogPost[] = [
   {
-    id: "welcome-to-future-blog",
-    title: "Welcome to Future Blog",
+    id: "welcome-to-QuickBlog",
+    title: "Welcome to QuickBlog",
     description: `
-      <p>Welcome to <strong>Future Blog</strong> — the space where curiosity meets innovation! Our mission is to empower developers and tech enthusiasts with practical knowledge, future-focused discussions, and thoughtful insights.</p>
+      <p>Welcome to <strong>QuickBlog</strong> — the space where curiosity meets innovation! Our mission is to empower developers and tech enthusiasts with practical knowledge, future-focused discussions, and thoughtful insights.</p>
       <p>Expect a variety of posts covering:</p>
       <ul>
         <li>Modern web development trends</li>
