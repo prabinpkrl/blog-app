@@ -15,7 +15,7 @@ export const defaultPosts: BlogPost[] = [
       <p>We're excited to begin this journey with you. Make sure to bookmark our page and check back often for new articles and guides!</p>
     `,
     image: {
-      url: "/file.svg",
+      url: "/quickblog.jpg",
       alt: "A futuristic digital illustration",
     },
     createdAt: "2025-1-1",
@@ -34,7 +34,7 @@ export const defaultPosts: BlogPost[] = [
       <p>Staying relevant in the web world means staying curious and flexible. Keep building, keep learning!</p>
     `,
     image: {
-      url: "/globe.svg",
+      url: "/webdevelopment.jpg",
       alt: "Modern web development illustration",
     },
     createdAt: "2025-1-1",
@@ -53,7 +53,7 @@ export const defaultPosts: BlogPost[] = [
       <p>Mastering JavaScript will give you the flexibility to build almost anything — from websites to full-scale applications.</p>
     `,
     image: {
-      url: "/window.svg",
+      url: "/javascript.jpg",
       alt: "JavaScript code on screen",
     },
     createdAt: "2025-1-1",
@@ -74,7 +74,7 @@ export const defaultPosts: BlogPost[] = [
       <p>Once you experience Tailwind’s productivity, it’s hard to go back!</p>
     `,
     image: {
-      url: "/file.svg",
+      url: "/tailwind.jpg",
       alt: "Tailwind CSS styled project example",
     },
     createdAt: "2025-1-1",
@@ -93,7 +93,7 @@ export const defaultPosts: BlogPost[] = [
       <p>Remember: every great developer once felt stuck too. Stay consistent, stay curious, and enjoy the process!</p>
     `,
     image: {
-      url: "/globe.svg",
+      url: "/motivation.jpg",
       alt: "Motivational quote on laptop",
     },
     createdAt: "2025-1-1",

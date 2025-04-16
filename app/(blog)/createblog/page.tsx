@@ -4,9 +4,9 @@ import { Input } from "@/components/ui/input";
 import { redirect } from "next/navigation";
 import { useState } from "react";
 import Image from "next/image";
+import { availbleimages } from "@/data/availbleimages";
 
 const CreateBlog = () => {
-  const availbleimages = ["/file.svg", "/globe.svg", "/window.svg"];
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [selected, setSelected] = useState<string | null>(null);

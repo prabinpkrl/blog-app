@@ -31,7 +31,7 @@ export default function Page() {
 
         <div className="flex-1 flex justify-center">
           <Image
-            src="/file.svg"
+            src="/javascript.jpg"
             alt="News illustration"
             className="rounded-2xl shadow-lg"
             width={500}
