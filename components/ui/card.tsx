@@ -73,7 +73,7 @@ const defaultPosts = [
 ];
 
 const Card = () => {
-  const [userPosts, setUserPosts] = useState<BlogPost[]>([]);
+  const [allPosts, setAllPosts] = useState<BlogPost[]>([]);
 
   useEffect(() => {
     const newBlogStored = localStorage.getItem("blogPosts");
@@ -89,21 +89,27 @@ const Card = () => {
         (post: BlogPost) => !deletedPosts.includes(post.id)
       );
 
-      setUserPosts(filteredPosts);
+      const merged = [
+        ...filteredPosts,
+        ...defaultPosts.filter((post) => !deletedPosts.includes(post.id)),
+      ];
+
+      setAllPosts(merged);
     } catch (error) {
       console.error("Error:", error);
-      setUserPosts([]);
+      setAllPosts(defaultPosts);
     }
   }, []);
-  const allPosts = [
-    ...userPosts,
-    ...defaultPosts.filter(
-      (post) =>
-        !JSON.parse(localStorage.getItem("deletedPosts") || "[]").includes(
-          post.id
-        )
-    ),
-  ];
+
+  // const allPosts = [
+  //   ...userPosts,
+  //   ...defaultPosts.filter(
+  //     (post) =>
+  //       !JSON.parse(localStorage.getItem("deletedPosts") || "[]").includes(
+  //         post.id
+  //       )
+  //   ),
+  // ];
 
   return (
     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
