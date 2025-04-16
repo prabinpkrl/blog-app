@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { redirect } from "next/navigation";
 
 const Signin = () => {
@@ -11,7 +11,7 @@ const Signin = () => {
   const [password, setPassword] = useState("");
 
   const handleLogIn = () => {
-    let signupUser = JSON.parse(localStorage.getItem("user") || "[]");
+    const signupUser = JSON.parse(localStorage.getItem("user") || "[]");
     console.log(signupUser);
     if (email === signupUser.email && password === signupUser.password) {
       localStorage.setItem("isLoggedIn", "true");

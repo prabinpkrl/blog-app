@@ -3,7 +3,7 @@ import { Button } from "./button";
 import Link from "next/link";
 import Image from "next/image";
 
-type BlogPost = {
+export type BlogPost = {
   id: string;
   title: string;
   description: string;

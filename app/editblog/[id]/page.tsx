@@ -5,10 +5,11 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
+import { BlogPost } from "@/components/ui/card";
 
 const availbleimages = ["/file.svg", "/globe.svg", "/window.svg"];
 
-const defaultPosts = [
+const defaultPosts: BlogPost[] = [
   {
     id: "welcome-to-future-blog",
     title: "Welcome to Future Blog",
@@ -18,6 +19,7 @@ const defaultPosts = [
       url: "/file.svg",
       alt: "A futuristic digital illustration",
     },
+    createdAt: "2025-1-1",
   },
   {
     id: "future-of-web-development",
@@ -28,6 +30,7 @@ const defaultPosts = [
       url: "/globe.svg",
       alt: "Modern web development illustration",
     },
+    createdAt: "2025-1-1",
   },
   {
     id: "why-learning-javascript-is-important",
@@ -38,6 +41,7 @@ const defaultPosts = [
       url: "/window.svg",
       alt: "JavaScript code on screen",
     },
+    createdAt: "2025-1-1",
   },
   {
     id: "understanding-tailwind-css-basics",
@@ -48,6 +52,7 @@ const defaultPosts = [
       url: "/file.svg",
       alt: "Tailwind CSS styled project example",
     },
+    createdAt: "2025-1-1",
   },
   {
     id: "how-to-stay-motivated-as-a-developer",
@@ -58,6 +63,7 @@ const defaultPosts = [
       url: "/globe.svg",
       alt: "Motivational quote on laptop",
     },
+    createdAt: "2025-1-1",
   },
 ];
 
@@ -69,11 +75,11 @@ const Editing = () => {
   const [selected, setSelected] = useState<string | null>(null);
 
   useEffect(() => {
-    const storedPosts =
+    const storedPosts: BlogPost[] =
       JSON.parse(localStorage.getItem("blogPosts") || "[]") || [];
     const combinedPosts = [...storedPosts, ...defaultPosts];
 
-    const blogToEdit = combinedPosts.find((post: any) => post.id === id);
+    const blogToEdit = combinedPosts.find((post) => post.id === id);
 
     if (blogToEdit) {
       setTitle(blogToEdit.title);
@@ -85,21 +91,22 @@ const Editing = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const storedPosts = JSON.parse(localStorage.getItem("blogPosts") || "[]");
+    const storedPosts: BlogPost[] = JSON.parse(
+      localStorage.getItem("blogPosts") || "[]"
+    );
 
-    const existingPost = storedPosts.find((post: any) => post.id === id);
+    const existingPost = storedPosts.find((post) => post.id === id);
 
-    let updatedPosts;
-
+    let updatedPosts: BlogPost[];
     if (existingPost) {
-      updatedPosts = storedPosts.map((post: any) =>
+      updatedPosts = storedPosts.map((post) =>
         post.id === id
           ? {
               ...post,
               title,
               description,
               image: {
-                url: selected,
+                url: selected as string,
                 alt: `${title} image`,
               },
             }
@@ -109,11 +116,11 @@ const Editing = () => {
       updatedPosts = [
         ...storedPosts,
         {
-          id,
+          id: id as string,
           title,
           description,
           image: {
-            url: selected,
+            url: selected as string,
             alt: `${title} image`,
           },
         },
