@@ -103,6 +103,8 @@ const BlogDetails = () => {
       <Image
         src={blog.image.url}
         alt={blog.image.alt}
+        height={500}
+        width={300}
         className="w-96 h-64 object-cover mb-4"
       />
       <p className="text-lg">{blog.description}</p>

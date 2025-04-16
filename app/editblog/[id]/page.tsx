@@ -192,6 +192,8 @@ const Editing = () => {
                     <Image
                       src={image}
                       alt="image"
+                      width={500}
+                      height={300}
                       className="w-full object-cover h-32"
                     />
                   </div>

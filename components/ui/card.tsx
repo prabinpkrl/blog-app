@@ -11,6 +11,7 @@ type BlogPost = {
     url: string;
     alt: string;
   };
+  createdAt?: string;
 };
 
 const defaultPosts = [
@@ -23,6 +24,7 @@ const defaultPosts = [
       url: "/file.svg",
       alt: "A futuristic digital illustration",
     },
+    createdAt: "2025-1-1",
   },
   {
     id: "future-of-web-development",
@@ -33,6 +35,7 @@ const defaultPosts = [
       url: "/globe.svg",
       alt: "Modern web development illustration",
     },
+    createdAt: "2025-1-1",
   },
   {
     id: "why-learning-javascript-is-important",
@@ -43,6 +46,7 @@ const defaultPosts = [
       url: "/window.svg",
       alt: "JavaScript code on screen",
     },
+    createdAt: "2025-1-1",
   },
   {
     id: "understanding-tailwind-css-basics",
@@ -53,6 +57,7 @@ const defaultPosts = [
       url: "/file.svg",
       alt: "Tailwind CSS styled project example",
     },
+    createdAt: "2025-1-1",
   },
   {
     id: "how-to-stay-motivated-as-a-developer",
@@ -63,6 +68,7 @@ const defaultPosts = [
       url: "/globe.svg",
       alt: "Motivational quote on laptop",
     },
+    createdAt: "2025-1-1",
   },
 ];
 
@@ -104,18 +110,44 @@ const Card = () => {
       {allPosts.map((post, index) => (
         <div
           key={post.id ? post.id : `user-${index}`}
-          className="bg-white rounded-2xl shadow-md overflow-hidden flex"
+          className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden flex flex-row border border-gray-100"
         >
-          <Image
-            src={post.image.url}
-            alt={post.image.alt}
-            className="h-48 w-fit object-cover"
-          />
-          <div className="p-4 flex flex-col justify-center">
-            <h2 className="text-xl font-bold mb-2">{post.title}</h2>
-            <p className="text-gray-600 mb-4">{post.description}</p>
-            <Button className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition">
-              <Link href={`/${post.id}`}>Read More</Link>
+          <div className=" relative w-full">
+            <Image
+              src={post.image.url}
+              alt={post.image.alt}
+              width={500}
+              height={300}
+              className="w-full h-full object-cover hover:scale-105"
+              style={{ height: "100%", position: "absolute" }}
+            />
+          </div>
+
+          <div className="p-5 flex flex-col flex-grow">
+            <div className="flex items-center text-xs text-gray-500 mb-2">
+              <span>
+                {post.createdAt
+                  ? new Date(post.createdAt).toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })
+                  : "Date unknown"}
+              </span>
+            </div>
+            <h2 className="text-xl font-bold mb-2 text-gray-800 line-clamp-2">
+              {post.title}
+            </h2>
+            <p className="text-gray-600 mb-4 flex-grow line-clamp-2">
+              {post.description}
+            </p>
+            <Button className="bg-gray-700 hover:bg-gray-800 text-white px-4 py-2 rounded-md transition-colors duration-200 w-full">
+              <Link
+                href={`/${post.id}`}
+                className="w-full inline-block text-center"
+              >
+                Read More
+              </Link>
             </Button>
           </div>
         </div>
