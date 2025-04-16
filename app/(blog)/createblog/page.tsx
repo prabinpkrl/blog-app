@@ -79,7 +79,7 @@ const CreateBlog = () => {
                 htmlFor="description"
                 className="block text-sm font-medium text-gray-700"
               >
-                Description
+                Description(You can write with HTML syntax)
               </label>
               <textarea
                 id="description"

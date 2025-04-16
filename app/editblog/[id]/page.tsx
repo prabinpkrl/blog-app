@@ -7,8 +7,7 @@ import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import { BlogPost } from "@/types/types";
 import { defaultPosts } from "@/data/dummyblogs";
-
-const availbleimages = ["/file.svg", "/globe.svg", "/window.svg"];
+import { availbleimages } from "@/data/availbleimages";
 
 const Editing = () => {
   const { id } = useParams();

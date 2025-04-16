@@ -6,26 +6,28 @@ import { defaultPosts } from "@/data/dummyblogs";
 import { BlogPost } from "@/types/types";
 
 import { redirect, useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const BlogDetails = () => {
   const params = useParams();
   const id = params.id;
+  const [blog, setBlog] = useState<BlogPost | null>();
 
-  const storedPosts = JSON.parse(localStorage.getItem("blogPosts") || "[]");
-  const allPosts = [...storedPosts, ...defaultPosts];
-  const blog = allPosts.find((post) => post.id === id);
+  useEffect(() => {
+    const storedPosts = JSON.parse(localStorage.getItem("blogPosts") || "[]");
+    const allPosts = [...storedPosts, ...defaultPosts];
+    const foundBlog = allPosts.find((post) => post.id === id) || null;
+    setBlog(foundBlog);
+  }, [id]);
 
-  if (!blog) return <>Blog not foung</>;
+  if (!blog) return <>Blog not found</>;
 
   const handleDelete = (id: string) => {
     const storedPosts: BlogPost[] = JSON.parse(
       localStorage.getItem("blogPosts") || "[]"
     );
-
     const updatedPosts = storedPosts.filter((post) => post.id !== id);
-
     localStorage.setItem("blogPosts", JSON.stringify(updatedPosts));
-
     redirect("/Home");
   };
 
