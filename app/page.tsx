@@ -16,7 +16,6 @@ export default function Page() {
       </nav>
 
       <main className="flex flex-col-reverse md:flex-row items-center justify-between max-w-7xl mx-auto px-8 py-16">
-        {/* Text Section */}
         <div className="flex-1 mb-8 md:mb-0">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-4">
             Today's Headlines: Stay <br /> Informed
@@ -30,7 +29,6 @@ export default function Page() {
           </Button>
         </div>
 
-        {/* Illustration Section */}
         <div className="flex-1 flex justify-center">
           <Image
             src="/file.svg"

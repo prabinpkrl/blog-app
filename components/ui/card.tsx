@@ -2,75 +2,7 @@ import { useEffect, useState } from "react";
 import { Button } from "./button";
 import Link from "next/link";
 import Image from "next/image";
-
-export type BlogPost = {
-  id: string;
-  title: string;
-  description: string;
-  image: {
-    url: string;
-    alt: string;
-  };
-  createdAt?: string;
-};
-
-const defaultPosts = [
-  {
-    id: "welcome-to-future-blog",
-    title: "Welcome to Future Blog",
-    description:
-      "This is the very first post on Future Blog. Stay tuned for tech tips, tutorials, and future-ready ideas!",
-    image: {
-      url: "/file.svg",
-      alt: "A futuristic digital illustration",
-    },
-    createdAt: "2025-1-1",
-  },
-  {
-    id: "future-of-web-development",
-    title: "The Future of Web Development",
-    description:
-      "Let’s explore the trends and tools shaping the future of website and app development.",
-    image: {
-      url: "/globe.svg",
-      alt: "Modern web development illustration",
-    },
-    createdAt: "2025-1-1",
-  },
-  {
-    id: "why-learning-javascript-is-important",
-    title: "Why Learning JavaScript is Important",
-    description:
-      "JavaScript is everywhere! Here’s why it’s still the best language to start your programming journey.",
-    image: {
-      url: "/window.svg",
-      alt: "JavaScript code on screen",
-    },
-    createdAt: "2025-1-1",
-  },
-  {
-    id: "understanding-tailwind-css-basics",
-    title: "Understanding Tailwind CSS Basics",
-    description:
-      "Simplify your styling process with Tailwind — the utility-first CSS framework that makes layout a breeze.",
-    image: {
-      url: "/file.svg",
-      alt: "Tailwind CSS styled project example",
-    },
-    createdAt: "2025-1-1",
-  },
-  {
-    id: "how-to-stay-motivated-as-a-developer",
-    title: "How to Stay Motivated as a Developer",
-    description:
-      "Developer life can be challenging. Here are some easy ways to stay inspired and productive on your coding journey.",
-    image: {
-      url: "/globe.svg",
-      alt: "Motivational quote on laptop",
-    },
-    createdAt: "2025-1-1",
-  },
-];
+import { BlogPost, defaultPosts } from "@/data/dummyblogs";
 
 const Card = () => {
   const [allPosts, setAllPosts] = useState<BlogPost[]>([]);
@@ -80,36 +12,26 @@ const Card = () => {
     const deletedPostsStored = localStorage.getItem("deletedPosts");
 
     try {
-      const parsed = newBlogStored ? JSON.parse(newBlogStored) : [];
-      const deletedPosts = deletedPostsStored
+      let parsed: BlogPost[] = newBlogStored ? JSON.parse(newBlogStored) : null;
+      const deletedPosts: string[] = deletedPostsStored
         ? JSON.parse(deletedPostsStored)
         : [];
 
+      if (!parsed) {
+        localStorage.setItem("blogPosts", JSON.stringify(defaultPosts));
+        parsed = defaultPosts;
+      }
+
       const filteredPosts = parsed.filter(
-        (post: BlogPost) => !deletedPosts.includes(post.id)
+        (post) => !deletedPosts.includes(post.id)
       );
 
-      const merged = [
-        ...filteredPosts,
-        ...defaultPosts.filter((post) => !deletedPosts.includes(post.id)),
-      ];
-
-      setAllPosts(merged);
+      setAllPosts(filteredPosts);
     } catch (error) {
       console.error("Error:", error);
       setAllPosts(defaultPosts);
     }
   }, []);
-
-  // const allPosts = [
-  //   ...userPosts,
-  //   ...defaultPosts.filter(
-  //     (post) =>
-  //       !JSON.parse(localStorage.getItem("deletedPosts") || "[]").includes(
-  //         post.id
-  //       )
-  //   ),
-  // ];
 
   return (
     <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
@@ -118,7 +40,6 @@ const Card = () => {
           key={post.id ? post.id : `user-${index}`}
           className="bg-white rounded-xl shadow-md hover:shadow-lg transition duration-300 overflow-hidden flex flex-row border border-gray-100"
         >
-          {/* Left Image */}
           {post.image?.url && (
             <div className="w-1/3 h-auto max-h-48 overflow-hidden">
               <Image
@@ -131,7 +52,6 @@ const Card = () => {
             </div>
           )}
 
-          {/* Right Content */}
           <div className="p-4 flex flex-col justify-between w-2/3">
             <div>
               <span className="text-xs text-gray-500">

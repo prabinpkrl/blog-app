@@ -39,7 +39,7 @@ const Signup = () => {
   const handleSignUp = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!validate()) return; // 🚫 Prevent submit if invalid.
+    if (!validate()) return;
 
     const user = { name, email, password };
     localStorage.setItem("user", JSON.stringify(user));
@@ -58,7 +58,6 @@ const Signup = () => {
         </h2>
 
         <form onSubmit={handleSignUp} noValidate>
-          {/* Name Field */}
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Name
@@ -74,7 +73,6 @@ const Signup = () => {
             )}
           </div>
 
-          {/* Email Field */}
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Email
@@ -90,7 +88,6 @@ const Signup = () => {
             )}
           </div>
 
-          {/* Password Field */}
           <div className="mb-6">
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Password
