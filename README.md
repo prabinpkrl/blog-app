@@ -1,19 +1,19 @@
 # Blog App
 
-A simple blog application built with **Next.js**, **Tailwind CSS**, and **localStorage**. This app allows users to sign up, log in, and manage blogs (create, edit, delete) with data persistence using localStorage.
+A simple blog application built with **Next.js**, **Tailwind CSS**, and postgresql. This app allows users to sign up, log in, and manage blogs (create, edit, delete) with data persistence using postgresql.
 
 ## Features
 
-- **Signup & Login** – User authentication with localStorage.
+- **Signup & Login** – User authentication with postgresql.
 - **Blogs Page** – View, create, edit, and delete blogs.
-- **LocalStorage** – Stores user data and blog posts.
+- **Postgresql** – Stores user data and blog posts.
 - **Logout** – Clears auth state and redirects to login.
 
 ## Tech Stack
 
 - **Next.js**
 - **Tailwind CSS**
-- **localStorage**
+- **Postgresql**
 
 ## Getting Started
 
