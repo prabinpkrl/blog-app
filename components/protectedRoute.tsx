@@ -1,19 +1,35 @@
 "use client";
-import { useEffect, ReactNode } from "react";
-import { redirect } from "next/navigation";
+import { useEffect, useState, ReactNode } from "react";
+import { useRouter } from "next/navigation";
 
 interface ProtectedRouteProps {
   children: ReactNode;
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
-  useEffect(() => {
-    const IsLoggedIn = localStorage.getItem("isLoggedIn");
+  const router = useRouter();
+  const [checking, setChecking] = useState(true);
 
-    if (!IsLoggedIn) {
-      redirect("/");
-    }
-  }, []);
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const res = await fetch("/api/auth/me");
+        if (!res.ok) {
+          router.replace("/");
+          return;
+        }
+        setChecking(false);
+      } catch (error) {
+        router.replace("/");
+      }
+    };
+
+    checkAuth();
+  }, [router]);
+
+  if (checking) {
+    return null;
+  }
 
   return <>{children}</>;
 };

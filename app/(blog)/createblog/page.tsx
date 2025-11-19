@@ -1,47 +1,53 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { redirect } from "next/navigation";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useState, type FormEvent } from "react";
 import Image from "next/image";
 import { availbleimages } from "@/data/availbleimages";
 
 const CreateBlog = () => {
+  const router = useRouter();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [selected, setSelected] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FocusEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!selected) {
       alert("Please select an image before publishing.");
       return;
     }
-    console.log({ title, description });
-    const existingPosts = JSON.parse(localStorage.getItem("blogPosts") || "[]");
     const slug = title
       .toLocaleLowerCase()
       .trim()
       .replace(/[^\w\s-]/g, "")
       .replace(/\s+/g, "-");
 
-    const newblog = {
-      id: slug,
-      title,
-      description,
-      image: {
-        url: selected,
-        alt: `${title} preview image`,
-      },
-      createdAt: new Date().toISOString(),
-    };
+    try {
+      const res = await fetch("/api/posts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title,
+          description,
+          slug,
+          imageUrl: selected,
+          imageAlt: `${title} preview image`,
+        }),
+      });
 
-    localStorage.setItem(
-      "blogPosts",
-      JSON.stringify([...existingPosts, newblog])
-    );
-    redirect("/Home");
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        alert(data?.message ?? "Failed to create blog post");
+        return;
+      }
+
+      router.push(`/${slug}`);
+    } catch (error) {
+      alert("Something went wrong. Please try again.");
+    }
   };
 
   return (

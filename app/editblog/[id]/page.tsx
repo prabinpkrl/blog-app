@@ -1,76 +1,72 @@
 "use client";
 
-import { redirect, useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useParams, useRouter } from "next/navigation";
+import { useEffect, useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import { BlogPost } from "@/types/types";
-import { defaultPosts } from "@/data/dummyblogs";
 import { availbleimages } from "@/data/availbleimages";
 
 const Editing = () => {
   const { id } = useParams();
+  const router = useRouter();
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [selected, setSelected] = useState<string | null>(null);
 
   useEffect(() => {
-    const storedPosts: BlogPost[] =
-      JSON.parse(localStorage.getItem("blogPosts") || "[]") || [];
-    const combinedPosts = [...storedPosts, ...defaultPosts];
+    const slug = String(id);
 
-    const blogToEdit = combinedPosts.find((post) => post.id === id);
+    const fetchBlog = async () => {
+      try {
+        const res = await fetch(`/api/posts/${slug}`);
+        if (!res.ok) {
+          router.replace("/blogs");
+          return;
+        }
+        const data: BlogPost = await res.json();
+        setTitle(data.title);
+        setDescription(data.description);
+        setSelected(data.image?.url || null);
+      } catch (error) {
+        router.replace("/blogs");
+      }
+    };
 
-    if (blogToEdit) {
-      setTitle(blogToEdit.title);
-      setDescription(blogToEdit.description);
-      setSelected(blogToEdit.image?.url || null);
+    if (id) {
+      fetchBlog();
     }
   }, [id]);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const storedPosts: BlogPost[] = JSON.parse(
-      localStorage.getItem("blogPosts") || "[]"
-    );
+    const slug = String(id);
 
-    const existingPost = storedPosts.find((post) => post.id === id);
-
-    let updatedPosts: BlogPost[];
-    if (existingPost) {
-      updatedPosts = storedPosts.map((post) =>
-        post.id === id
-          ? {
-              ...post,
-              title,
-              description,
-              image: {
-                url: selected as string,
-                alt: `${title} image`,
-              },
-            }
-          : post
-      );
-    } else {
-      updatedPosts = [
-        ...storedPosts,
-        {
-          id: id as string,
+    try {
+      const res = await fetch(`/api/posts/${slug}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
           title,
           description,
-          image: {
-            url: selected as string,
-            alt: `${title} image`,
-          },
-        },
-      ];
-    }
+          imageUrl: selected,
+          imageAlt: `${title} image`,
+        }),
+      });
 
-    localStorage.setItem("blogPosts", JSON.stringify(updatedPosts));
-    redirect(`/${id}`);
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        alert(data?.message ?? "Failed to update blog post");
+        return;
+      }
+
+      router.push(`/${slug}`);
+    } catch (error) {
+      alert("Something went wrong. Please try again.");
+    }
   };
 
   return (
@@ -82,7 +78,7 @@ const Editing = () => {
             <div className="hover:bg-gray-500 p-1 rounded-lg">
               <button
                 type="button"
-                onClick={() => redirect("/Home")}
+                onClick={() => router.push("/blogs")}
                 className="hover:underline"
               >
                 close

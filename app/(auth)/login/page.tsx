@@ -3,25 +3,34 @@
 import Link from "next/link";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
-import { redirect } from "next/navigation";
+import { useState, type FormEvent } from "react";
+import { useRouter } from "next/navigation";
 
 const Signin = () => {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogIn = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleLogIn = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const signupUser = JSON.parse(localStorage.getItem("user") || "[]");
-    console.log(signupUser);
-    if (email === signupUser.email && password === signupUser.password) {
-      localStorage.setItem("isLoggedIn", "true");
-      alert("login Sucessful");
+    try {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
 
-      redirect("/blogs");
-    } else {
-      alert("invalid");
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        alert(data?.message ?? "Invalid email or password");
+        return;
+      }
+
+      alert("login Sucessful");
+      router.push("/blogs");
+    } catch (error) {
+      alert("Something went wrong. Please try again.");
     }
   };
 

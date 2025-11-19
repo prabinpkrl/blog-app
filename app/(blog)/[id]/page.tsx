@@ -2,33 +2,66 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
-import { defaultPosts } from "@/data/dummyblogs";
 import { BlogPost } from "@/types/types";
 
-import { redirect, useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const BlogDetails = () => {
   const params = useParams();
   const id = params.id;
-  const [blog, setBlog] = useState<BlogPost | null>();
+  const router = useRouter();
+  const [blog, setBlog] = useState<BlogPost | null>(null);
 
   useEffect(() => {
-    const storedPosts = JSON.parse(localStorage.getItem("blogPosts") || "[]");
-    const allPosts = [...storedPosts, ...defaultPosts];
-    const foundBlog = allPosts.find((post) => post.id === id) || null;
-    setBlog(foundBlog);
+    const slug = String(id);
+
+    const fetchBlog = async () => {
+      try {
+        const res = await fetch(`/api/posts/${slug}`);
+        if (!res.ok) {
+          setBlog(null);
+          return;
+        }
+
+        const data = (await res
+          .json()
+          .catch(() => null)) as BlogPost | null;
+
+        if (!data) {
+          setBlog(null);
+          return;
+        }
+
+        if (data.title) {
+          document.title = data.title;
+        }
+
+        setBlog(data);
+      } catch (error) {
+        setBlog(null);
+      }
+    };
+
+    if (id) {
+      fetchBlog();
+    }
   }, [id]);
 
   if (!blog) return <>Blog not found</>;
 
-  const handleDelete = (id: string) => {
-    const storedPosts: BlogPost[] = JSON.parse(
-      localStorage.getItem("blogPosts") || "[]"
-    );
-    const updatedPosts = storedPosts.filter((post) => post.id !== id);
-    localStorage.setItem("blogPosts", JSON.stringify(updatedPosts));
-    redirect("/Home");
+  const handleDelete = async (slug: string) => {
+    try {
+      const res = await fetch(`/api/posts/${slug}`, { method: "DELETE" });
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        alert(data?.message ?? "Failed to delete blog");
+        return;
+      }
+      router.push("/blogs");
+    } catch (error) {
+      alert("Something went wrong. Please try again.");
+    }
   };
 
   return (

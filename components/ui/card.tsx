@@ -2,34 +2,28 @@ import { useEffect, useState } from "react";
 import { Button } from "./button";
 import Link from "next/link";
 import Image from "next/image";
-import { defaultPosts } from "@/data/dummyblogs";
 import { BlogPost } from "@/types/types";
 
 const Card = () => {
   const [allPosts, setAllPosts] = useState<BlogPost[]>([]);
 
   useEffect(() => {
-    try {
-      let storedPosts: BlogPost[] = JSON.parse(
-        localStorage.getItem("blogPosts") || "null"
-      );
-
-      if (!storedPosts) {
-        localStorage.setItem("blogPosts", JSON.stringify(defaultPosts));
-        storedPosts = defaultPosts;
+    const fetchPosts = async () => {
+      try {
+        const res = await fetch("/api/posts");
+        if (!res.ok) {
+          setAllPosts([]);
+          return;
+        }
+        const data: BlogPost[] = await res.json();
+        setAllPosts(data);
+      } catch (error) {
+        console.error("Error:", error);
+        setAllPosts([]);
       }
+    };
 
-      const sortedPosts = [...storedPosts].sort((a, b) => {
-        const dateA = new Date(a.createdAt ?? 0).getTime();
-        const dateB = new Date(b.createdAt ?? 0).getTime();
-        return dateB - dateA;
-      });
-
-      setAllPosts(sortedPosts);
-    } catch (error) {
-      console.error("Error:", error);
-      setAllPosts(defaultPosts);
-    }
+    fetchPosts();
   }, []);
 
   return (

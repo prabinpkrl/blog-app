@@ -2,11 +2,12 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { redirect } from "next/navigation";
 import Link from "next/link";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useState, type FormEvent } from "react";
 
 const Signup = () => {
+  const router = useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -36,18 +37,29 @@ const Signup = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSignUp = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSignUp = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!validate()) return;
 
-    const user = { name, email, password };
-    localStorage.setItem("user", JSON.stringify(user));
-    localStorage.setItem("isLoggedIn", "true");
+    try {
+      const res = await fetch("/api/auth/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password }),
+      });
 
-    alert("Signup successful!");
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        alert(data?.message ?? "Signup failed");
+        return;
+      }
 
-    redirect("/login");
+      alert("Signup successful!");
+      router.push("/login");
+    } catch (error) {
+      alert("Something went wrong. Please try again.");
+    }
   };
 
   return (
