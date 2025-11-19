@@ -30,7 +30,7 @@ const Editing = () => {
         setTitle(data.title);
         setDescription(data.description);
         setSelected(data.image?.url || null);
-      } catch (error) {
+      } catch {
         router.replace("/blogs");
       }
     };
@@ -38,7 +38,7 @@ const Editing = () => {
     if (id) {
       fetchBlog();
     }
-  }, [id]);
+  }, [id, router]);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -64,7 +64,7 @@ const Editing = () => {
       }
 
       router.push(`/${slug}`);
-    } catch (error) {
+    } catch {
       alert("Something went wrong. Please try again.");
     }
   };

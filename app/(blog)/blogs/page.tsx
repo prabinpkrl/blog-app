@@ -12,7 +12,9 @@ const BlogHomePage = () => {
   const handleLogout = async () => {
     try {
       await fetch("/api/auth/logout", { method: "POST" });
-    } catch (error) {}
+    } catch {
+      // intentionally swallowed
+    }
 
     router.push("/");
   };

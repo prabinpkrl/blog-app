@@ -45,7 +45,7 @@ const CreateBlog = () => {
       }
 
       router.push(`/${slug}`);
-    } catch (error) {
+    } catch {
       alert("Something went wrong. Please try again.");
     }
   };

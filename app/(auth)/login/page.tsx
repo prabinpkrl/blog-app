@@ -29,7 +29,7 @@ const Signin = () => {
 
       alert("login Sucessful");
       router.push("/blogs");
-    } catch (error) {
+    } catch {
       alert("Something went wrong. Please try again.");
     }
   };

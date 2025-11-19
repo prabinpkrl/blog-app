@@ -57,7 +57,7 @@ const Signup = () => {
 
       alert("Signup successful!");
       router.push("/login");
-    } catch (error) {
+    } catch {
       alert("Something went wrong. Please try again.");
     }
   };

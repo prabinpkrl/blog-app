@@ -38,7 +38,7 @@ const BlogDetails = () => {
         }
 
         setBlog(data);
-      } catch (error) {
+      } catch {
         setBlog(null);
       }
     };
@@ -59,7 +59,7 @@ const BlogDetails = () => {
         return;
       }
       router.push("/blogs");
-    } catch (error) {
+    } catch {
       alert("Something went wrong. Please try again.");
     }
   };

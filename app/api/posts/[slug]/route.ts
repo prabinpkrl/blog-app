@@ -23,12 +23,16 @@ function mapPostRowToBlogPost(row: DBPost) {
   };
 }
 
+interface RouteParams {
+  slug: string;
+}
+
 interface RouteContext {
-  params: { slug: string };
+  params: Promise<RouteParams>;
 }
 
 export async function GET(_req: NextRequest, context: RouteContext) {
-  const { slug } = context.params;
+  const { slug } = await context.params;
 
   try {
     const rows = (await sql`
@@ -53,7 +57,7 @@ export async function GET(_req: NextRequest, context: RouteContext) {
 }
 
 export async function PUT(req: NextRequest, context: RouteContext) {
-  const { slug } = context.params;
+  const { slug } = await context.params;
 
   try {
     const { title, description, imageUrl, imageAlt } = await req.json();
@@ -93,7 +97,7 @@ export async function PUT(req: NextRequest, context: RouteContext) {
 }
 
 export async function DELETE(_req: NextRequest, context: RouteContext) {
-  const { slug } = context.params;
+  const { slug } = await context.params;
 
   try {
     await sql`DELETE FROM posts WHERE slug = ${slug}`;

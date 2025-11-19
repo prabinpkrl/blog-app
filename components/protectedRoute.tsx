@@ -19,7 +19,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
           return;
         }
         setChecking(false);
-      } catch (error) {
+      } catch {
         router.replace("/");
       }
     };
